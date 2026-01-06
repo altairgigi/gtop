@@ -1,0 +1,7 @@
+# specific executables
+gtop
+a.out
+
+# other/temp executables
+*.o
+*.swp
