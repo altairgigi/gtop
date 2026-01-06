@@ -60,10 +60,10 @@ int comparePid(const void* a, const void* b) {
     }
     else {
         if(p1->pid > p2->pid) {
-            return -1;
+            return 1;
         }
         else if(p1->pid < p2->pid) {
-            return 1;
+            return -1;
         }
         else {
             return 0;
