@@ -21,7 +21,6 @@ void getProcessList(Process *list, int *count) {
     while(((entry = readdir(dir)) != NULL) && *count < MAX_PROCESSES) {
         //if the firt element of entry is a number then we can read the directory
         if(isdigit(entry->d_name[0])) {
-            //int pid = atoi(entry->d_name);
             int pid = searchPid(list, count, atoi(entry->d_name));
             if(pid == -1) { //process is new
                 char stat_path[267], comm_path[267]; //gets rid of warning realting to snprintf outputs
@@ -29,23 +28,16 @@ void getProcessList(Process *list, int *count) {
                 snprintf(stat_path, sizeof(stat_path), "/proc/%s/stat", entry->d_name);
                 FILE *f_stat = fopen(stat_path, "r");
                 if(f_stat != NULL) {
-                    char state = '?';
+                    char buffer[1024], state = '?';
                     unsigned long user_time = 0, syst_time = 0;
                     long rss = 0;
-                    fscanf(f_stat, "%*d (%*[^)]) %c", &state); //skips to state, code avoids paranteses in name field
-                    for (int i = 4; i <= 24; i++) {
-                        if (i == 14) {
-                            fscanf(f_stat, "%lu %lu", &user_time, &syst_time);
-                            i++; 
-                        }
-                        else if (i == 24) {
-                            fscanf(f_stat, "%ld", &rss);
+                    if(fgets(buffer, sizeof(buffer), f_stat) != NULL) {; //gets string from file
+                        char *pbuffer = strrchr(buffer, ')'); //moves after last parenteses (skipping command name)
+                        if(pbuffer != NULL) {
+                            sscanf(pbuffer + 2, "%c %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %lu %lu %*d %*d %*d %*d %*d %*d %*d %*d %ld", &state, &user_time, &syst_time, &rss);
                             if(rss < 0) { //some tasks use virtual memory and are recorded with rss -1 or 0
                                 rss = 0;
                             }
-                        }
-                        else {
-                            fscanf(f_stat, "%*s"); //skips value
                         }
                     }
                     fclose(f_stat);
@@ -80,23 +72,16 @@ void getProcessList(Process *list, int *count) {
                 snprintf(stat_path, sizeof(stat_path), "/proc/%s/stat", entry->d_name);
                 FILE *f_stat = fopen(stat_path, "r");
                 if(f_stat != NULL) {
-                    char state = '?';
+                    char buffer[1024], state = '?';
                     unsigned long user_time = 0, syst_time = 0;
                     long rss = 0;
-                    fscanf(f_stat, "%*d (%*[^)]) %c", &state);
-                    for (int i = 4; i <= 24; i++) {
-                        if (i == 14) {
-                            fscanf(f_stat, "%lu %lu", &user_time, &syst_time);
-                            i++; 
-                        }
-                        else if (i == 24) {
-                            fscanf(f_stat, "%ld", &rss);
-                            if(rss < 0) {
+                    if(fgets(buffer, sizeof(buffer), f_stat) != NULL) {; //gets string from file
+                        char *pbuffer = strrchr(buffer, ')'); //moves after last parenteses (skipping command name)
+                            if(pbuffer != NULL) {
+                            sscanf(pbuffer + 2, "%c %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %lu %lu %*d %*d %*d %*d %*d %*d %*d %*d %ld", &state, &user_time, &syst_time, &rss);
+                            if(rss < 0) { //some tasks use virtual memory and are recorded with rss -1 or 0
                                 rss = 0;
                             }
-                        }
-                        else {
-                            fscanf(f_stat, "%*s");
                         }
                     }
                     fclose(f_stat);

@@ -17,7 +17,6 @@ Gtop includes/ensure:
 * Basic instructions and practices (cycles, control flow, structures, pointers, etc.) 
 * Error handling;
 * Directory & file handling;
-* User input handling;
 * Dynamic array;
 * Function pointer;
 * Array sorting (through qsort());

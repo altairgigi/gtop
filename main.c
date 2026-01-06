@@ -3,13 +3,11 @@
 
 int main() {
     Process *list = calloc(MAX_PROCESSES, sizeof(Process));
-    //int (*sortMode) (const void*, const void*); //function pointer to direct sorting by user input
     int count = 0;
     long uptime;
     float cpuLoad;
     unsigned long ramUsed, cpuTotalStart, cpuTotalEnd, cpuIdleStart, cpuIdleEnd, cpuTotalDelta, ramTotal;
     getRamTotal(&ramTotal); //get total ram
-    //memset(&list, 0, sizeof(list)); //set whole list to 0
     while(1){
         //system stats block
         getSystemStats(&ramUsed, &cpuTotalStart, &cpuIdleStart, &ramTotal);
