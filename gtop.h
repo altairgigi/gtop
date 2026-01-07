@@ -1,13 +1,13 @@
 #ifndef GTOP_H 
 #define GTOP_H 
-//libraries necessary to all the files
+//libraries needed by all the files
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 //constant for max processes
 #define MAX_PROCESSES 4096
-//single process struct
+//process struct
 typedef struct {
     int pid;
     char name[256];
