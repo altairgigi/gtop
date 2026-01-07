@@ -2,6 +2,6 @@
 gtop
 a.out
 
-# other/temp executables
+# other/temp files
 *.o
 *.swp

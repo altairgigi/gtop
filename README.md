@@ -1,12 +1,12 @@
 # GTOP
 
-Gtop (Gigi's top) is a simple system monitor made in C (c99/c17).
+Gtop (Gigi's top) is a simple system monitor made in C (c11/c17).
 
 ## Installation
 
 Download the 'gtop' file on your Linux system.
 
-You can 'install' it by putting it in the /bin directory and setting system permissions accordingly.
+You can 'install' it by moving/copying it in the /bin directory with ```sudo cp gtop /usr/local/bin/```.
 
 Call the 'gtop' command from the terminal/shell of your choice.
 
