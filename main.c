@@ -1,7 +1,7 @@
 #include "gtop.h"
 
 int main() {
-    Process *list = calloc(MAX_PROCESSES, sizeof(Process));
+    Process *list = calloc(MAX_PROCESSES, sizeof(Process)); //creates list and allocates cleaned memory
     int (*sortMode) (const void*, const void*) = compareCpu; //function pointer to direct sorting by user input
     int count = 0, execute = 1;
     long uptime;
@@ -23,19 +23,19 @@ int main() {
         //prints system info and task list
         printInterface(list, count, cpuLoad, ramUsed, ramTotal, uptime);
         char input = '\0';
-        if(read(STDIN_FILENO, &input, 1) == 1) {
+        if(read(STDIN_FILENO, &input, 1) == 1) { //checks for input and switches sorting function
             switch(input) {
             case '1': 
-                sortMode = compareCpu;
+                sortMode = compareCpu; //descending order by cpu load
                 break;
             case '2':
-                sortMode = compareRam;
+                sortMode = compareRam; //descending order by ram load
                 break;
             case '3':
-                sortMode = comparePid;
+                sortMode = comparePid; //ascending order by pid
                 break;
             case 'q':
-                execute = 0;
+                execute = 0; //exit the program
                 break;
             default:
                 break;

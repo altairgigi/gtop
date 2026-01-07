@@ -10,11 +10,11 @@ void disableRawMode() {
 //function to enable raw mode for handling input
 void enableRawMode() {
     tcgetattr(STDIN_FILENO, &cfgOrigin); //save original configuration
-    atexit(disableRawMode);
+    atexit(disableRawMode); //prepare the terminal to be reset once the program exits
 
     struct termios cfgRaw = cfgOrigin; //copy original configuration
     cfgRaw.c_lflag &= ~(ECHO | ICANON); //ignore enter and hide input
-    cfgRaw.c_cc[VMIN] = 0; //do not wait for any input
+    cfgRaw.c_cc[VMIN] = 0; //do not wait preset number of characters
     cfgRaw.c_cc[VTIME] = 0; //do not wait before passing the input
 
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &cfgRaw); //enforce raw configuration

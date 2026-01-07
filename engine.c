@@ -28,14 +28,14 @@ int compareCpu(const void* a, const void* b) {
 int compareRam(const void* a, const void* b) {
     Process* p1 = (Process*)a;
     Process* p2 = (Process*)b;
-    //same as aboe but with ram
+
     if(p1->isActive > p2->isActive) {
         return -1;
     }
     else if(p1->isActive < p2->isActive) {
         return 1;
     }
-    else {
+    else { //same as above but with ram load
         if(p1->ramLoad > p2->ramLoad) {
             return -1;
         }
@@ -51,14 +51,14 @@ int compareRam(const void* a, const void* b) {
 int comparePid(const void* a, const void* b) {
     Process* p1 = (Process*)a;
     Process* p2 = (Process*)b;
-    //same as above but with pid
+
     if(p1->isActive > p2->isActive) {
         return -1;
     }
     else if(p1->isActive < p2->isActive) {
         return 1;
     }
-    else {
+    else { //different criterias because order need to be ascending
         if(p1->pid > p2->pid) {
             return 1;
         }

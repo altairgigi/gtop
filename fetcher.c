@@ -127,10 +127,10 @@ void getRamTotal(unsigned long *total_ram) {
 }
 //function to get cpu and ram loads
 void getSystemStats(unsigned long *ram_usage, unsigned long *total_cpu, unsigned long *idle_cpu, unsigned long *total_ram) {
-    //gets ram usage
+    //gets ram use
     FILE *f_ram = fopen("/proc/meminfo", "r");
     if(f_ram != NULL) {
-        char label[32];
+        char label[32]; //label needed to find proper line inside the file
         unsigned long value;
         while(fscanf(f_ram, "%s %lu kB", label, &value) != EOF) {
             if(strcmp(label, "MemAvailable:") == 0) {
@@ -140,11 +140,11 @@ void getSystemStats(unsigned long *ram_usage, unsigned long *total_cpu, unsigned
         }
         fclose(f_ram);
     }
-    //gets total cpu usage
+    //gets total cpu use
     FILE *f_cpu = fopen("/proc/stat", "r");
     if(f_cpu != NULL) {
         char label[10];
-        unsigned long u, n, s, id, iow, irq, soft;
+        unsigned long u, n, s, id, iow, irq, soft; //cpu times: user, nice, system, idle, i/o wait, hard interrupt and soft interrupt
         fscanf(f_cpu, "%s %lu %lu %lu %lu %lu %lu %lu", label, &u, &n, &s, &id, &iow, &irq, &soft);
         *total_cpu = u + n + s + id + iow + irq + soft;
         *idle_cpu = id;
